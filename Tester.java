@@ -62,6 +62,8 @@ public class Tester {
         //store.getGroup("Техніка").deleteProduct("Холодильник");
         //System.out.println(store.getGroup("Техніка"));
 
-
+        
+        //Конструктор інтерфейсу
+         Graphics g = new Graphics(store);
     }
 }
