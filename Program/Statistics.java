@@ -43,16 +43,19 @@ public class Statistics {
 
   //записує всі групи і товари в них, на яку суму міститься товарів і кількість одиниць товару 
     public static String calculateStore(Store myStore){
-        String s =  "Магазин ";  //всі товари
+        String s =  "Магазин \n";  //всі товари
         double sumMoney = 0; //сума грошей
         double q = 0; //кількість одиниць товару
         for(int i = 0; i<myStore.getGroups().size(); i++) {
-            s = s + calculateGroup(myStore.getGroups().get(i));
-            sumMoney += calculateMoney(myStore.getGroups().get(i));
-            q += calculateQuantity(myStore.getGroups().get(i));
+            if(myStore.getGroups().get(i).getProducts()!=null) {
+                s = s + "\n"+calculateGroup(myStore.getGroups().get(i));
+                sumMoney += calculateMoney(myStore.getGroups().get(i));
+                q += calculateQuantity(myStore.getGroups().get(i));
+            }
+            else s = s+"\n"+myStore.getGroups().get(i).getName()+ ": ця група пуста";
         }
 
-        s = s + "\nВ магазині товари на суму: " + sumMoney + " гривень" + "\nКількість одиниць товару: " + q;
+        s = s + "\n\nВ магазині товари на суму: " + sumMoney + " гривень" + "\nКількість одиниць товару: " + q;
         return s;
     }
 
