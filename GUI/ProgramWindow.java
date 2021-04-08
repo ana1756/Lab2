@@ -66,7 +66,7 @@ public class ProgramWindow extends JFrame {
     }
 
     public void createStoreFile() {
-        // TODO: 08.04.2021 Створення файлу х усіма товарами
+        Statistics.addStoreToFile(this.store);
     }
 
     public void createGroupFile(Group group) {
