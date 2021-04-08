@@ -63,7 +63,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return name + "\n" +
+        return "\n\n"+name + "\n" +
                 "   Ціна: " + price + " грн \n" +
                 "   Кількість: " + number + " штук(и) \n" +
                 "   Виробник: " + brand + "\n" +
