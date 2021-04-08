@@ -166,7 +166,7 @@ public class Graphics extends JFrame {
             }
         });
 
-        JButton saveData = new JButton("Зберегти"); //Поки нічого не робить
+        JButton saveData = new JButton("Зберегти"); //записує інформацію про магазин у файл 
         saveData.setPreferredSize(new Dimension(120,25));
         saveData.setBackground(new Color(128, 118, 146));
         saveData.setForeground(new Color(255, 253, 253));
@@ -174,7 +174,7 @@ public class Graphics extends JFrame {
         saveData.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Statistics.addStoreToFile(myStore);
             }
         });
 
@@ -310,7 +310,7 @@ public class Graphics extends JFrame {
             }
         });
 
-        JButton saveData = new JButton("Зберегти"); //Поки нічого не робить
+        JButton saveData = new JButton("Зберегти"); ///записує інформацію про групу в файл 
         saveData.setPreferredSize(new Dimension(120,25));
         saveData.setBackground(new Color(128, 118, 146));
         saveData.setForeground(new Color(255, 253, 253));
@@ -318,7 +318,7 @@ public class Graphics extends JFrame {
         saveData.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Statistics.addGroupToFile(groups.get(indexOfGroup));
             }
         });
 
