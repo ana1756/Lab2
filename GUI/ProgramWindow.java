@@ -70,7 +70,7 @@ public class ProgramWindow extends JFrame {
     }
 
     public void createGroupFile(Group group) {
-        // TODO: 08.04.2021 Створення файлу з товарами окремої групи
+        Statistics.addGroupToFile(this.getCurrentGroup());
     }
 
     public void openSearchResults() {
