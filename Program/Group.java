@@ -69,7 +69,7 @@ public class Group {
     public String toString() {
         String str = name + " (" + description + ") \n";
         for (Product product : products) {
-            str += product + "\n";
+            str += "\n"+ product + "\n";
         }
         return str;
     }
