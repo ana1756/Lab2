@@ -6,25 +6,32 @@ import java.io.IOException;
 
 public class Statistics {
   
-    public static String calculateGroup(Group group){
-        String s =  group.getName() + ": \n\n" + group.getProducts().toString();  //всі товари
-
+   public static String calculateGroup(Group group){
+        String s = "";
+        if( group.getProducts()!=null) s = group.getName() + ": \n\n" + group.getProducts().toString();  //всі товари
+        else s = "Категорія товарів " + group.getName() + " не містить додного товару";
         return s;
     }
 
   //повертає, скільки на яку суму грошей міститься товару в групі 
     public static double calculateMoney(Group group){
         double sumMoney = 0; //сума грошей
-        for (int i = 0; i<group.getProducts().size(); i++)
-            sumMoney  += group.getProducts().get(i).getPrice() * group.getProducts().get(i).getNumber();
+        if( group.getProducts()!=null) {
+            for (int i = 0; i < group.getProducts().size(); i++)
+                sumMoney += group.getProducts().get(i).getPrice() * group.getProducts().get(i).getNumber();
+        }
+        else sumMoney = 0;
         return sumMoney;
     }
 
   //повертає кількість одиниць товару в групі
     public static int calculateQuantity(Group group){
         int q = 0; //сума грошей
-        for (int i = 0; i<group.getProducts().size(); i++)
-           q += group.getProducts().get(i).getNumber();
+        if( group.getProducts()!=null) {
+            for (int i = 0; i < group.getProducts().size(); i++)
+                q += group.getProducts().get(i).getNumber();
+        }
+        else q = 0;
         return q;
     }
 
