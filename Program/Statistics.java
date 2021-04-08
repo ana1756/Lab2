@@ -46,6 +46,16 @@ public class Statistics {
         catch(IOException ex){
             System.out.println(ex.getMessage());
         }
+      
+      try(BufferedWriter bw = new BufferedWriter(new FileWriter("D:/"+ group.getName() + ".txt")))
+        {
+            bw.write(calculateGroup(group));
+            bw.write("\nТовари на суму: " + calculateMoney(group) + " гривень" + "\nКількість одиниць товару: " +
+                    calculateQuantity(group));
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
   //записує всі групи і товари в них, на яку суму міститься товарів і кількість одиниць товару 
@@ -69,6 +79,14 @@ public class Statistics {
   //записує це все в файл 
     public static void addStoreToFile(Store store){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter( "Store.txt")))
+        {
+            bw.write(calculateStore(store));
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+      
+      try(BufferedWriter bw = new BufferedWriter(new FileWriter( "D:/"+ "Store.txt")))
         {
             bw.write(calculateStore(store));
         }
