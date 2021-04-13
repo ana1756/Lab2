@@ -260,7 +260,7 @@ public class GroupPanel extends JPanel {
     }
 
     private JButton createFileButton() {
-        JButton saveData = new JButton("Зберегти"); //Поки нічого не робить
+        JButton saveData = new JButton("Зберегти"); 
         saveData.setPreferredSize(new Dimension(120, 25));
         saveData.setBackground(new Color(128, 118, 146));
         saveData.setForeground(new Color(255, 253, 253));
@@ -268,7 +268,7 @@ public class GroupPanel extends JPanel {
         saveData.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: 08.04.2021 Створити файл лише з товарами цієї категорії
+                //створює файл з товарами цієї групи 
                 programWindow.createGroupFile(group);
             }
         });
@@ -294,7 +294,7 @@ public class GroupPanel extends JPanel {
     }
 
     private JButton deleteCategoryButton() {
-        JButton deleteCategory = new JButton("Видалити"); //Поки нічого не робить, але має видаляти групу
+        JButton deleteCategory = new JButton("Видалити");
         deleteCategory.setPreferredSize(new Dimension(120, 25));
         deleteCategory.setBackground(new Color(128, 118, 146));
         deleteCategory.setForeground(new Color(255, 253, 253));
@@ -302,10 +302,46 @@ public class GroupPanel extends JPanel {
         deleteCategory.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: 08.04.2021 Створити діалогове вукно підтверження
-                //"Ви дійсно хочете видалити цю категорію?" Якщо так, тоді наступні дії:
-                programWindow.getStore().deleteGroup(group.getName());
-                programWindow.openStoreWindow();
+                //"Ви дійсно хочете видалити цю категорію?"
+                JFrame ad1 = new JFrame();
+                ad1.setSize(400, 150);
+                ad1.setLocationRelativeTo(null);
+                JPanel northPanel1 = new JPanel();
+                JPanel southPanel1 = new JPanel(new GridLayout(1, 1));
+                ad1.add(northPanel1, BorderLayout.CENTER);
+                ad1.add(southPanel1, BorderLayout.SOUTH);
+                northPanel1.setBackground(new Color(236, 234, 232));
+
+                southPanel1.setBackground(new Color(236, 234, 232));
+                JLabel label = new JLabel("Ви впевнені?");
+                label.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+                JButton yes = new JButton("Так");
+                JButton no = new JButton("Ні");
+                yes.setBackground(new Color(128, 118, 146));
+                yes.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+                yes.setForeground(new Color(250, 250, 250));
+                northPanel1.add(label, BorderLayout.CENTER);
+                southPanel1.add(yes, BorderLayout.WEST);
+                southPanel1.add(no, BorderLayout.EAST);
+                ad1.setVisible(true);
+                yes.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        programWindow.getStore().deleteGroup(group.getName());
+                        programWindow.openStoreWindow();
+                        ad1.setVisible(false);
+                    }
+                });
+                no.setBackground(new Color(128, 118, 146));
+                no.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+                no.setForeground(new Color(250, 250, 250));
+                no.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ad1.setVisible(false);
+                    }
+                });
+
             }
         });
 
