@@ -473,10 +473,49 @@ public class ProductPanel extends JPanel {
         deleteProductButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: 08.04.2021 Створити діалогове вукно підтверження
-                //"Ви дійсно хочете видалити цей товар?" Якщо так, тоді наступні дії:
-                programWindow.getCurrentGroup().deleteProduct(product.getName());
-                programWindow.openGroupWindow(programWindow.getCurrentGroup());
+
+                //"Ви дійсно хочете видалити цей товар?"
+
+                JFrame ad1 = new JFrame();
+                ad1.setSize(400, 150);
+                ad1.setLocationRelativeTo(null);
+                JPanel northPanel1 = new JPanel();
+                JPanel southPanel1 = new JPanel(new GridLayout(1, 1));
+                ad1.add(northPanel1, BorderLayout.CENTER);
+                ad1.add(southPanel1, BorderLayout.SOUTH);
+                northPanel1.setBackground(new Color(236, 234, 232));
+
+                southPanel1.setBackground(new Color(236, 234, 232));
+                JLabel label = new JLabel("Ви впевнені?");
+                label.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+                JButton yes = new JButton("Так");
+                JButton no = new JButton("Ні");
+                yes.setBackground(new Color(128, 118, 146));
+                yes.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+                yes.setForeground(new Color(250, 250, 250));
+                northPanel1.add(label, BorderLayout.CENTER);
+                southPanel1.add(yes, BorderLayout.WEST);
+                southPanel1.add(no, BorderLayout.EAST);
+                ad1.setVisible(true);
+                yes.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        programWindow.getCurrentGroup().deleteProduct(product.getName());
+                        programWindow.openGroupWindow(programWindow.getCurrentGroup());
+                        ad1.setVisible(false);
+                    }
+                });
+                no.setBackground(new Color(128, 118, 146));
+                no.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+                no.setForeground(new Color(250, 250, 250));
+                no.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ad1.setVisible(false);
+                        programWindow.openProductWindow(product);
+                    }
+                });
+
             }
         });
 
