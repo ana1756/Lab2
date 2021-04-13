@@ -289,9 +289,51 @@ public class ProductPanel extends JPanel {
         addNumberButton.setForeground(new Color(250, 250, 250));
         addNumberButton.setBorder(new LineBorder(Color.LIGHT_GRAY));
         addNumberButton.addActionListener(new ActionListener() {
-            @Override
+             @Override //інтерфейс додавання одиниць товару 
             public void actionPerformed(ActionEvent e) {
-                // TODO: 08.04.2021 Панель додавання кількості до продукту (пункт 7)
+                JFrame ad = new JFrame();
+                ad.setSize(400, 200);
+                ad.setLocationRelativeTo(null);
+                JPanel northPanel = new JPanel();
+                JPanel centerPanel = new JPanel(new GridLayout(1, 1));
+                JPanel southPanel = new JPanel(new GridLayout(1, 2));
+                ad.add(northPanel, BorderLayout.NORTH);
+                ad.add(centerPanel, BorderLayout.CENTER);
+                ad.add(southPanel, BorderLayout.EAST);
+                northPanel.setBackground(new Color(236, 234, 232));
+                centerPanel.setBackground(new Color(198, 233, 243));
+                southPanel.setBackground(new Color(198, 233, 243));
+                JLabel howMany = new JLabel("Cкільки одиниць продукту додати?");
+                howMany.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+                JTextField a = new JTextField();
+                a.setSize(50, 50);
+                a.setFont(new Font(Font.SERIF, Font.PLAIN, 45));
+                JButton addProduct = new JButton("Додати");
+                addProduct.setBackground(new Color(128, 118, 146));
+                addProduct.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+                addProduct.setForeground(new Color(250, 250, 250));
+                addProduct.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(a.getText()!=null){
+                            String s = a.getText();
+                            if(s.matches("[0-9]*")){
+                                int a = product.getNumber() + Integer.valueOf(s);
+                                product.setNumber(a);
+                                ad.setVisible(false);
+                                programWindow.openProductWindow(product);
+                            }
+                            else {
+                                a.setText(null);
+                            }
+                        }
+                        else programWindow.openProductWindow(product);
+                    }
+                });
+                northPanel.add(howMany);
+                centerPanel.add(a);
+                southPanel.add(addProduct);
+                ad.setVisible(true);
             }
         });
 
