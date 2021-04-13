@@ -292,7 +292,7 @@ public class ProductPanel extends JPanel {
              @Override //інтерфейс додавання одиниць товару 
             public void actionPerformed(ActionEvent e) {
                 JFrame ad = new JFrame();
-                ad.setSize(400, 200);
+                ad.setSize(400, 150);
                 ad.setLocationRelativeTo(null);
                 JPanel northPanel = new JPanel();
                 JPanel centerPanel = new JPanel(new GridLayout(1, 1));
@@ -343,9 +343,125 @@ public class ProductPanel extends JPanel {
         deleteNumberButton.setForeground(new Color(250, 250, 250));
         deleteNumberButton.setBorder(new LineBorder(Color.LIGHT_GRAY));
         deleteNumberButton.addActionListener(new ActionListener() {
-            @Override
+             @Override //інтерфейс списування товарів 
+            //запитує перед тим, як списати: так - списує, скасувати - повертається на сторінку продукту
+            //якщо задане значення менше, ніж кількість наявний продуктів, встановлює нуль 
+            //якщо намагаються списати продукт, кількість якого нуль - повідомлення, що на складі цей товар відсутній 
             public void actionPerformed(ActionEvent e) {
-                // TODO: 08.04.2021 Інтерфейс списання товару
+                JFrame ad = new JFrame();
+                ad.setSize(400, 150);
+                ad.setLocationRelativeTo(null);
+                JPanel northPanel = new JPanel();
+                JPanel centerPanel = new JPanel(new GridLayout(1, 1));
+                JPanel southPanel = new JPanel(new GridLayout(1, 2));
+                ad.add(northPanel, BorderLayout.NORTH);
+                ad.add(centerPanel, BorderLayout.CENTER);
+                ad.add(southPanel, BorderLayout.EAST);
+                northPanel.setBackground(new Color(236, 234, 232));
+                centerPanel.setBackground(new Color(198, 233, 243));
+                southPanel.setBackground(new Color(198, 233, 243));
+                JLabel howMany = new JLabel("Cкільки одиниць продукту списати?");
+                howMany.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+                JTextField a = new JTextField();
+                a.setSize(50, 50);
+                a.setFont(new Font(Font.SERIF, Font.PLAIN, 45));
+                JButton addProduct = new JButton("Списати");
+                addProduct.setBackground(new Color(128, 118, 146));
+                addProduct.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+                addProduct.setForeground(new Color(250, 250, 250));
+                addProduct.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String s = a.getText();
+                        if(!s.equals("")){
+                            if(s.matches("[0-9]*")) {
+                                if (product.getNumber() == 0) {
+                                    JFrame ad1 = new JFrame();
+                                    ad1.setSize(400, 150);
+                                    ad1.setLocationRelativeTo(null);
+                                    JPanel northPanel = new JPanel();
+                                    northPanel.setBackground(new Color(198, 233, 243));
+                                    ad1.add(northPanel);
+                                    JPanel sPanel = new JPanel();
+                                    sPanel.setBackground(new Color(198, 233, 243));
+                                    ad1.add(sPanel, BorderLayout.SOUTH);
+                                    JLabel label = new JLabel("Цього товару немає на складі!");
+                                    label.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+                                    northPanel.add(label);
+                                    label.setHorizontalAlignment(SwingConstants.CENTER);
+                                    JButton ok = new JButton("OK");
+                                    ok.setBackground(new Color(128, 118, 146));
+                                    ok.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+                                    ok.setForeground(new Color(250, 250, 250));
+                                    sPanel.add(ok, BorderLayout.SOUTH);
+                                    ok.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            ad1.setVisible(false);
+                                            ad.setVisible(false);
+                                            programWindow.openProductWindow(product);
+                                        }
+                                    });
+                                    ad1.setVisible(true);
+                                } else {
+                                    JFrame ad1 = new JFrame();
+                                    ad1.setSize(400, 150);
+                                    ad1.setLocationRelativeTo(null);
+                                    JPanel northPanel1 = new JPanel();
+                                    JPanel southPanel1 = new JPanel(new GridLayout(1, 1));
+                                    ad1.add(northPanel1, BorderLayout.CENTER);
+                                    ad1.add(southPanel1, BorderLayout.SOUTH);
+                                    northPanel1.setBackground(new Color(236, 234, 232));
+
+                                    southPanel1.setBackground(new Color(198, 233, 243));
+                                    JLabel label = new JLabel("Ви впевнені?");
+                                    label.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+                                    JButton yes = new JButton("Так");
+                                    JButton no = new JButton("Скасувати");
+                                    yes.setBackground(new Color(128, 118, 146));
+                                    yes.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+                                    yes.setForeground(new Color(250, 250, 250));
+                                    northPanel1.add(label, BorderLayout.CENTER);
+                                    southPanel1.add(yes, BorderLayout.WEST);
+                                    southPanel1.add(no, BorderLayout.EAST);
+                                    ad1.setVisible(true);
+
+                                    yes.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            int a = product.getNumber() - Integer.valueOf(s);
+                                            if (a > 0) {
+                                                product.setNumber(a);
+                                            } else {
+                                                product.setNumber(0);
+                                            }
+                                            Product last = programWindow.getCurrentProduct();
+                                            ad.setVisible(false);
+                                            ad1.setVisible(false);
+                                            programWindow.openProductWindow(last);
+                                        }
+                                    });
+                                    no.setBackground(new Color(128, 118, 146));
+                                    no.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+                                    no.setForeground(new Color(250, 250, 250));
+                                    no.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            ad1.setVisible(false);
+                                            ad.setVisible(false);
+                                            programWindow.openProductWindow(product);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                        else programWindow.openProductWindow(product);
+                    }
+                });
+                northPanel.add(howMany);
+                centerPanel.add(a);
+                southPanel.add(addProduct);
+                ad.setVisible(true);
             }
         });
 
