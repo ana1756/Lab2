@@ -6,6 +6,11 @@ import Program.*;
 
 public class Tester {
     public static void main(String[] args) {
+        Store store = new Store();
+        ProgramWindow w = new ProgramWindow(store);
+    }
+
+    private void oldMain() {
         Product TV = new Product("Телевізор", 37000, 5, "LG", "Діагональ екрана 55 / Роздільна здатність 3840x2160");
         Product fridge = new Product("Холодильник", 19999, 15, "BOSCH", "двокамерний / 400 л");
         Product washingMachine = new Product("Пральна машина", 18300, 22, "Samsung", "7 кг / 84.8 x 59.8 x 59 см");
@@ -21,12 +26,12 @@ public class Tester {
         appliances.addProduct(fridge);
         appliances.addProduct(washingMachine);
         appliances.addProduct(smartphone);
-        appliances.addProduct(laptop );
+        appliances.addProduct(laptop);
         appliances.addProduct(cooker);
         appliances.addProduct(fridge);
         appliances.addProduct(washingMachine);
         appliances.addProduct(smartphone);
-        appliances.addProduct(laptop );
+        appliances.addProduct(laptop);
         appliances.addProduct(cooker);
 
 
@@ -59,37 +64,5 @@ public class Tester {
         instruments.addProduct(sax);
         instruments.addProduct(guitar);
         instruments.addProduct(basGuitar);
-
-
-        //--------------------------------------------------------------------------------------------------
-
-        //створюємо склад-магазин
-        Store store = new Store();
-
-        Group g1 = new Group("Тварини");
-        Group g2 = new Group("Продукти");
-        Group g3 = new Group("Одяг");
-        Group g4 = new Group("Парфуми");
-        Group g5 = new Group("Канцтовари");
-        Group g6 = new Group("Книги");
-        Group g7 = new Group("Картини");
-        Group g8 = new Group("Меблі");
-
-        //додаємо до складу вже створені групи товарів
-        store.addGroup(appliances);
-        store.addGroup(instruments);
-        store.addGroup(g1);
-        store.addGroup(g2);
-        store.addGroup(g3);
-        store.addGroup(g4);
-        store.addGroup(g5);
-        store.addGroup(g6);
-        store.addGroup(g7);
-        store.addGroup(g8);
-
-        //додаємо до складу вже створені групи товарів
-        store.addGroup(appliances);
-        store.addGroup(instruments);
-        ProgramWindow w = new ProgramWindow(store);
     }
 }

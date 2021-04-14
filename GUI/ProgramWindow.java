@@ -14,6 +14,8 @@ public class ProgramWindow extends JFrame {
     private StorePanel storePanel;
     private GroupPanel groupPanel;
     private ProductPanel productPanel;
+    private SearchPanel searchPanel;
+    private JPanel currentWindow;
 
     public ProgramWindow(Store store) {
         super("Склад");
@@ -31,8 +33,37 @@ public class ProgramWindow extends JFrame {
         add(storePanel);
     }
 
+    public void openSearchWindow(String searchText) {
+        currentProduct = null;
+        currentGroup = null;
+        if (storePanel != null) {
+            remove(storePanel);
+        }
+        if (searchPanel != null) {
+            remove(searchPanel);
+        }
+        if (groupPanel != null) {
+            remove(groupPanel);
+        }
+        searchPanel = new SearchPanel(store, this, searchText);
+        add(searchPanel);
+        revalidate();
+
+    }
+
     public void openStoreWindow() {
-        remove(groupPanel);
+        currentProduct = null;
+        currentGroup = null;
+        if (groupPanel != null) {
+            remove(groupPanel);
+        }
+        if (productPanel != null) {
+            remove(productPanel);
+        }
+
+        if (searchPanel!=null){
+            remove(searchPanel);
+        }
         storePanel = new StorePanel(store, this);
         add(storePanel);
         revalidate();
@@ -54,7 +85,12 @@ public class ProgramWindow extends JFrame {
 
     public void openProductWindow(Product product) {
         currentProduct = product;
-        remove(groupPanel);
+        if (groupPanel != null) {
+            remove(groupPanel);
+        }
+        if (storePanel != null) {
+            remove(storePanel);
+        }
         productPanel = new ProductPanel(product, this);
         add(productPanel);
         revalidate();
@@ -67,6 +103,11 @@ public class ProgramWindow extends JFrame {
 
     public void createStoreFile() {
         Statistics.addStoreToFile(this.store);
+
+    }
+
+    public void reduceProduct(Product product) {
+
     }
 
     public void createGroupFile(Group group) {
@@ -74,7 +115,7 @@ public class ProgramWindow extends JFrame {
     }
 
     public void openSearchResults() {
-        // TODO: 08.04.2021 Відкриття вікна з результатими пошуку 
+        // TODO: 08.04.2021 Відкриття вікна з результатими пошуку
     }
 
     public Store getStore() {
@@ -87,5 +128,9 @@ public class ProgramWindow extends JFrame {
 
     public Group getCurrentGroup() {
         return currentGroup;
+    }
+
+    public SearchPanel getSearchPanel() {
+        return searchPanel;
     }
 }

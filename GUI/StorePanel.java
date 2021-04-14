@@ -56,7 +56,7 @@ public class StorePanel extends JPanel {
         JTextArea searchText = new JTextArea(1, 30);
         searchText.setFont(new Font(Font.SERIF, Font.PLAIN, 25));
         searchText.setBorder(new LineBorder(Color.LIGHT_GRAY));
-        searchText.setToolTipText("Введіть назву групи або товару");
+
 
         JButton searchButton = new JButton("Пошук"); //Шукає серед всіх груп та всіх продуктів
         searchButton.setPreferredSize(new Dimension(110, 33));
@@ -66,8 +66,8 @@ public class StorePanel extends JPanel {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: 08.04.2021 Вікно результатів пошуку
-                programWindow.openSearchResults();
+
+                programWindow.openSearchWindow(searchText.getText());
             }
         });
 
@@ -110,10 +110,15 @@ public class StorePanel extends JPanel {
     private JScrollPane scroll() {
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
-        panel.setBackground(new Color(198, 233, 243));
-
+        panel.setForeground(new Color(255, 253, 253));
         for (int i = 0; i < store.getGroups().size(); i++) {
             panel.add(oneCategoryPanel(store.getGroups().get(i)));
+        }
+        if (store.getProducts().size() < 9) {
+
+            for (int n = 0; n < 9 - store.getProducts().size(); n++) {
+                panel.add(falseProductPanel());
+            }
         }
 
         JScrollPane scroll = new JScrollPane(panel);
@@ -122,6 +127,15 @@ public class StorePanel extends JPanel {
         return scroll;
     }
 
+    private JPanel falseProductPanel() {
+        JPanel oneProductPanel = new JPanel(new BorderLayout());
+//        oneProductPanel.setToolTipText(product.getDescription());
+        oneProductPanel.setBorder(new LineBorder(Color.WHITE));
+        oneProductPanel.setPreferredSize(new Dimension(100, 40));
+        oneProductPanel.setBackground(new Color(255, 253, 253));
+
+        return oneProductPanel;
+    }
     private JButton oneCategoryPanel(Group group) {
         JButton button = new JButton(group.getName());
         button.setFont(new Font("Century", Font.PLAIN, 18));
@@ -336,11 +350,10 @@ public class StorePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Group newGroup = new Group(newCategory.getText());
+                Group newGroup = new Group(newCategory.getText(), newDetails.getText());
                 newGroup.setDescription(newDetails.getText());
-                store.addGroup(newGroup);
-                removeAll();
-                revalidate();
+                programWindow.getStore().addGroup(newGroup);
+                programWindow.remove(StorePanel.this);
                 programWindow.openStoreWindow();
 
             }
