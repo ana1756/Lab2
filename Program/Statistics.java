@@ -5,8 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Statistics {
-  
-  //повертає, скільки на яку суму грошей міститься товару в групі 
+
+    //повертає, скільки на яку суму грошей міститься товару в групі
     public static long calculateMoney(Group group){
         long sumMoney = 0; //сума грошей
         if( group.getProducts()!=null) {
@@ -17,7 +17,7 @@ public class Statistics {
         return sumMoney;
     }
 
-  //повертає кількість одиниць товару в групі
+    //повертає кількість одиниць товару в групі
     public static int calculateQuantity(Group group){
         int q = 0; //сума грошей
         if( group.getProducts()!=null) {
@@ -28,26 +28,26 @@ public class Statistics {
         return q;
     }
 
-  //записує все в файл 
+    //записує все в файл
     public static void addGroupToFile(Group group){
-      
-      try(BufferedWriter bw = new BufferedWriter(new FileWriter("D:/"+ group.getName() + ".txt")))
+
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("D:/"+ group.getName() + ".txt")))
         {
             bw.write(group.getName().toUpperCase());
             bw.newLine();
             if(group.getProducts()!=null) {
-            for (int d = 0; d<group.getProducts().size(); d++){
+                for (int d = 0; d<group.getProducts().size(); d++){
+                    bw.newLine();
+                    bw.write(group.getProducts().get(d).getName().toUpperCase()); bw.newLine();
+                    bw.write("Ціна: " + group.getProducts().get(d).getPrice()); bw.newLine();
+                    bw.write("Кількість: " + Math.round(group.getProducts().get(d).getNumber())); bw.newLine();
+                    bw.write("Виробник: " + group.getProducts().get(d).getBrand()); bw.newLine();
+                    bw.write("Опис "+group.getProducts().get(d).getDescription()); bw.newLine();
+                }
                 bw.newLine();
-                bw.write(group.getProducts().get(d).getName().toUpperCase()); bw.newLine();
-                bw.write("Ціна: " + group.getProducts().get(d).getPrice()); bw.newLine();
-                bw.write("Кількість: " + Math.round(group.getProducts().get(d).getNumber())); bw.newLine();
-                bw.write("Виробник: " + group.getProducts().get(d).getBrand()); bw.newLine();
-                bw.write("Опис "+group.getProducts().get(d).getDescription()); bw.newLine();
-            }
-            bw.newLine();
-            bw.write("Товари на суму: " +calculateMoney(group)+ " гривень");
-            bw.newLine();
-            bw.write( "Кількість одиниць товару: " + calculateQuantity(group));
+                bw.write("Товари на суму: " +calculateMoney(group)+ " гривень");
+                bw.newLine();
+                bw.write( "Кількість одиниць товару: " + calculateQuantity(group));
             }
             else bw.write("Ця група пуста!");
         }
@@ -56,7 +56,7 @@ public class Statistics {
         }
     }
 
-  //записує магазин в файл
+    //записує магазин в файл
     public static void addStoreToFile(Store store){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter( "D:/"+"Store.txt")))
         {

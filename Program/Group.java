@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class Group {
 
-    String name;
-    String description;
-    ArrayList<Product> products;
+    public String name;
+    public String description;
+    public ArrayList<Product> products;
 
     /**
      * Конструктор для створення групи товарів
@@ -17,7 +17,8 @@ public class Group {
     public Group(String name, String description) {
         this.name = name;
         this.description = description;
-        products = new ArrayList<>(1);
+        products = new ArrayList<>(5);
+
     }
 
     public Group(String name) {
@@ -47,7 +48,7 @@ public class Group {
     public Product getProduct(String name) {
         try {
             return products.get(products.indexOf(new Product(name)));
-        } catch (IndexOutOfBoundsException ex){
+        } catch (IndexOutOfBoundsException ex) {
             return null;
         }
 
@@ -62,14 +63,24 @@ public class Group {
     }
 
     public ArrayList<Product> getProducts() {
-        return products;
+        ArrayList<Product> productsAvailable = new ArrayList<>(1);
+        if (this.products != null) {
+            for (Product p : products) {
+                if (p != null) {
+                    if (!p.isDeleted()) {
+                        productsAvailable.add(p);
+                    }
+                }
+            }
+        }
+        return productsAvailable;
     }
 
     @Override
     public String toString() {
         String str = name + " (" + description + ") \n";
         for (Product product : products) {
-            str += "\n"+ product + "\n";
+            str += product + "\n";
         }
         return str;
     }

@@ -5,6 +5,7 @@ public class Product {
     private String name;
     private String description;
     private String brand;
+    private boolean deleted = false;
     private int price;
     private int number;
     private static int numberAll = 0;
@@ -63,7 +64,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "\n\n"+name + "\n" +
+        return name + "\n" +
                 "   Ціна: " + price + " грн \n" +
                 "   Кількість: " + number + " штук(и) \n" +
                 "   Виробник: " + brand + "\n" +
@@ -112,5 +113,13 @@ public class Product {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 }

@@ -1,6 +1,7 @@
 package Program;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Store {
 
@@ -9,32 +10,34 @@ public class Store {
     /**
      * Конструктор створення складу
      */
-    public Store(){
+    public Store() {
         groups = new ArrayList<>(1);
     }
 
     /**
      * Додає групу товарів до складу
+     *
      * @param group група товарів, яку необхідно додати
      * @return true, якщо додавання успішне, в іншому випадку - false
      */
-    public boolean addGroup(Group group){
+    public boolean addGroup(Group group) {
         return groups.add(group);
     }
 
     /**
      * Видаляє групу товарів зі складу
+     *
      * @param name назва групи товаів, яку необхідно видалити
      * @return true, якщо видалення успішне, в іншому випадку - false
      */
-    public boolean deleteGroup(String name){
+    public boolean deleteGroup(String name) {
         return groups.remove(new Group(name));
     }
 
-    public Group getGroup(String name){
+    public Group getGroup(String name) {
         try {
             return groups.get(groups.indexOf(new Group(name)));
-        } catch (IndexOutOfBoundsException ex){
+        } catch (IndexOutOfBoundsException ex) {
             return null;
         }
     }
@@ -42,13 +45,35 @@ public class Store {
     /**
      * Повертає список усіх продуктів складу
      */
-    public ArrayList<Product> getProducts(){
+    public ArrayList<Product> getProducts() {
         ArrayList<Product> products = new ArrayList<>(1);
-        for (Group group: groups){
-            for (Product product: group.products){
+        for (Group group : groups) {
+            for (Product product : group.products) {
                 products.add(product);
             }
         }
+        return products;
+    }
+
+    public ArrayList<Product> findProducts(String searchText) {
+        String text = searchText.toLowerCase();
+        ArrayList<Product> products = new ArrayList<>(1);
+        for (Group group : groups) {
+            if (group != null) {
+                if (group.getProducts()!=null) {
+                    for (Product product : group.getProducts()) {
+                        if (product != null) {
+                            String name =product.getName().toLowerCase(Locale.ROOT);
+                            if (name.contains(text)) {
+                                products.add(product);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println(products.size());
         return products;
     }
 
@@ -56,10 +81,10 @@ public class Store {
         return groups;
     }
 
-    public String toString(){
+    public String toString() {
         String str = "";
-        for (Group group: groups){
-            str += group +"\n\n";
+        for (Group group : groups) {
+            str += group + "\n\n";
         }
         return str;
     }
