@@ -7,6 +7,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GroupPanel extends JPanel {
 
@@ -549,7 +550,7 @@ public class GroupPanel extends JPanel {
     }
 
     private JPanel southProductPanel() {
-              JPanel buttonsPanel = new JPanel(new GridLayout(1, 0));
+        JPanel buttonsPanel = new JPanel(new GridLayout(1, 0));
         buttonsPanel.setBackground(new Color(198, 233, 243));
 
 
@@ -594,21 +595,66 @@ public class GroupPanel extends JPanel {
         return buttonsPanel;
     }
 
+    public static ArrayList<String> unicProdNames = new ArrayList<>();
+
     private void addProduct() throws NumberFormatException {
         try {
+            if (!unicProdNames.contains(nameArea.getText())) {
+                unicProdNames.add(nameArea.getText());
+                String name = nameArea.getText();
+                int price = Integer.valueOf(priceArea.getText());
+                int number = Integer.valueOf(numberArea.getText());
+                String brand = brandArea.getText();
+                String description = descriptionArea.getText();
 
-            String name = nameArea.getText();
-            int price = Integer.valueOf(priceArea.getText());
-            int number = Integer.valueOf(numberArea.getText());
-            String brand = brandArea.getText();
-            String description = descriptionArea.getText();
+                Product newProduct = new Product(name, price, number, brand, description);
+                programWindow.getCurrentGroup().addProduct(newProduct);
 
-            Product newProduct = new Product(name, price, number, brand, description);
-            programWindow.getCurrentGroup().addProduct(newProduct);
+            } else {
+                showUnicNameError();
+            }
         } catch (NumberFormatException exception) {
 
         }
     }
+
+    private void showUnicNameError() {
+        JFrame errorMessage = new JFrame();
+        errorMessage.setSize(500, 150);
+        errorMessage.setLocationRelativeTo(null);
+
+        JPanel northPanel1 = new JPanel();
+        JPanel southPanel1 = new JPanel(new GridLayout(1, 1));
+
+        errorMessage.add(northPanel1, BorderLayout.CENTER);
+        errorMessage.add(southPanel1, BorderLayout.SOUTH);
+        northPanel1.setBackground(new Color(250, 250, 250));
+
+        southPanel1.setBackground(new Color(236, 234, 232));
+        JLabel label = new JLabel("Товар з такою назвою вже створений.");
+        label.setFont(new Font(Font.SERIF, Font.PLAIN, 15));
+        JButton yes = new JButton("Ок");
+        yes.setBackground(new Color(128, 118, 146));
+        yes.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+        yes.setForeground(new Color(250, 250, 250));
+        northPanel1.add(label, BorderLayout.CENTER);
+        southPanel1.add(yes, BorderLayout.WEST);
+        errorMessage.setVisible(true);
+
+        yes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                errorMessage.removeAll();
+                errorMessage.setVisible(false);
+                numberArea.setText("");
+
+            }
+        });
+
+
+    }
+
+
 
 
 }

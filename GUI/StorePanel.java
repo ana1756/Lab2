@@ -7,6 +7,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class StorePanel extends JPanel {
 
@@ -136,6 +137,7 @@ public class StorePanel extends JPanel {
 
         return oneProductPanel;
     }
+
     private JButton oneCategoryPanel(Group group) {
         JButton button = new JButton(group.getName());
         button.setFont(new Font("Century", Font.PLAIN, 18));
@@ -340,6 +342,8 @@ public class StorePanel extends JPanel {
         return getBack;
     }
 
+    public static ArrayList<String> unicCatNames = new ArrayList<>();
+
     private JButton saveNewCategoryButton() {
         JButton saveCategory = new JButton("Зберегти");
         saveCategory.setBackground(new Color(128, 118, 146));
@@ -349,16 +353,96 @@ public class StorePanel extends JPanel {
         saveCategory.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                Group newGroup = new Group(newCategory.getText(), newDetails.getText());
-                newGroup.setDescription(newDetails.getText());
-                programWindow.getStore().addGroup(newGroup);
-                programWindow.remove(StorePanel.this);
-                programWindow.openStoreWindow();
+                if (!unicCatNames.contains(newCategory.getText()) && !newCategory.getText().equals("")
+                        && !newDetails.getText().equals("")) {
+                    unicCatNames.add(newCategory.getText());
+                    Group newGroup = new Group(newCategory.getText(), newDetails.getText());
+                    newGroup.setDescription(newDetails.getText());
+                    programWindow.getStore().addGroup(newGroup);
+                    programWindow.remove(StorePanel.this);
+                    programWindow.openStoreWindow();
+                } else if ((newCategory.getText().equals("") || newDetails.getText().equals("")) &&!unicCatNames.contains(newCategory.getText())) {
+                    showEmptyAreaError();
+                } else {
+                    showUnicNameError();
+                }
 
             }
         });
         return saveCategory;
+
+    }
+
+    private void showEmptyAreaError(){
+        JFrame errorMessage = new JFrame();
+        errorMessage.setSize(500, 150);
+        errorMessage.setLocationRelativeTo(null);
+
+        JPanel northPanel1 = new JPanel();
+
+        JPanel southPanel1 = new JPanel(new GridLayout(1, 1));
+
+        errorMessage.add(northPanel1, BorderLayout.CENTER);
+        errorMessage.add(southPanel1, BorderLayout.SOUTH);
+        northPanel1.setBackground(new Color(250, 250, 250));
+
+        southPanel1.setBackground(new Color(236, 234, 232));
+        JLabel label = new JLabel("Введіть назву та опис.");
+        label.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+        JButton yes = new JButton("Ок");
+        yes.setBackground(new Color(128, 118, 146));
+        yes.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+        yes.setForeground(new Color(250, 250, 250));
+        northPanel1.add(label, BorderLayout.CENTER);
+        southPanel1.add(yes, BorderLayout.WEST);
+        errorMessage.setVisible(true);
+
+        yes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                errorMessage.removeAll();
+                errorMessage.setVisible(false);
+                newCategory.setText("");
+
+            }
+        });
+    }
+
+
+
+    private void showUnicNameError() {
+        JFrame errorMessage = new JFrame();
+        errorMessage.setSize(500, 150);
+        errorMessage.setLocationRelativeTo(null);
+
+        JPanel northPanel1 = new JPanel();
+        JPanel southPanel1 = new JPanel(new GridLayout(1, 1));
+
+        errorMessage.add(northPanel1, BorderLayout.CENTER);
+        errorMessage.add(southPanel1, BorderLayout.SOUTH);
+        northPanel1.setBackground(new Color(250, 250, 250));
+
+        southPanel1.setBackground(new Color(236, 234, 232));
+        JLabel label = new JLabel("Категорія товарів з такою назвою вже створена.");
+        label.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+        JButton yes = new JButton("Ок");
+        yes.setBackground(new Color(128, 118, 146));
+        yes.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+        yes.setForeground(new Color(250, 250, 250));
+        northPanel1.add(label, BorderLayout.CENTER);
+        southPanel1.add(yes, BorderLayout.WEST);
+        errorMessage.setVisible(true);
+
+        yes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                errorMessage.removeAll();
+                errorMessage.setVisible(false);
+                newCategory.setText("");
+
+            }
+        });
+
 
     }
 
