@@ -98,7 +98,7 @@ public class ProgramWindow extends JFrame {
 
 
     public void openStatisticsWindow() {
-        // TODO: 07.04.2021 Вікно статистики
+        Statistics.showStatistics(this.store);
     }
 
     public void createStoreFile() {
