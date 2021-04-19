@@ -61,7 +61,7 @@ public class ProgramWindow extends JFrame {
             remove(productPanel);
         }
 
-        if (searchPanel!=null){
+        if (searchPanel != null) {
             remove(searchPanel);
         }
         storePanel = new StorePanel(store, this);
@@ -97,6 +97,10 @@ public class ProgramWindow extends JFrame {
     }
 
 
+    public void openGroupStatisticsWindow(Group group) {
+        Statistics.showGroupStatistics(group);
+    }
+
     public void openStatisticsWindow() {
         Statistics.showStatistics(this.store);
     }
@@ -106,17 +110,10 @@ public class ProgramWindow extends JFrame {
 
     }
 
-    public void reduceProduct(Product product) {
-
-    }
-
     public void createGroupFile(Group group) {
         Statistics.addGroupToFile(this.getCurrentGroup());
     }
 
-    public void openSearchResults() {
-        // TODO: 08.04.2021 Відкриття вікна з результатими пошуку
-    }
 
     public Store getStore() {
         return store;

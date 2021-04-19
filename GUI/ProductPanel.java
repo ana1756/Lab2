@@ -135,7 +135,7 @@ public class ProductPanel extends JPanel {
         priceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (priceArea.getText().matches("[0-9]*")) {
+                if (priceArea.getText().matches("[0-9]+(.[0-9])?")) {
                     product.setPrice(Integer.valueOf(priceArea.getText()));
                     titlePanel();
                 } else {
@@ -267,7 +267,6 @@ public class ProductPanel extends JPanel {
         return falsePanel;
 
     }
-
 
 
     private JPanel southPanel() {

@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class GroupPanel extends JPanel {
 
@@ -60,7 +61,7 @@ public class GroupPanel extends JPanel {
         JTextArea searchText = new JTextArea(1, 30);
         searchText.setFont(new Font(Font.SERIF, Font.PLAIN, 25));
         searchText.setBorder(new LineBorder(Color.LIGHT_GRAY));
-        searchText.setToolTipText("Введіть назву групи або товару");
+
 
         JButton searchButton = new JButton("Пошук"); //Шукає серед всіх груп та всіх продуктів
         searchButton.setPreferredSize(new Dimension(110, 33));
@@ -92,7 +93,6 @@ public class GroupPanel extends JPanel {
 
         return productsTitle;
     }
-
 
     private JPanel centerPanel() {
         JPanel centrePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -170,18 +170,24 @@ public class GroupPanel extends JPanel {
         productBrand.setFont(new Font("Century", Font.PLAIN, 15));
         productBrand.setForeground(Color.white);
 
-        JLabel emptyButton = new JLabel();
-        emptyButton.setBorder(new LineBorder(Color.LIGHT_GRAY));
-        emptyButton.setPreferredSize(new Dimension(120, 15));
-        emptyButton.setBackground(new Color(80, 80, 80));
-        emptyButton.setForeground(new Color(255, 253, 253));
-        emptyButton.setFont(new Font("Century", Font.PLAIN, 15));
+        JButton statisticsButton = new JButton("Статистика");
+        statisticsButton.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        statisticsButton.setPreferredSize(new Dimension(120, 15));
+        statisticsButton.setBackground(new Color(80, 80, 80));
+        statisticsButton.setForeground(new Color(255, 253, 253));
+        statisticsButton.setFont(new Font("Century", Font.PLAIN, 15));
+        statisticsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                programWindow.openGroupStatisticsWindow(group);
+            }
+        });
 
         headerTable.add(productName);
         headerTable.add(productPrice);
         headerTable.add(productNumber);
         headerTable.add(productBrand);
-        headerTable.add(emptyButton);
+        headerTable.add(statisticsButton);
 
         return headerTable;
     }
@@ -236,7 +242,6 @@ public class GroupPanel extends JPanel {
 
     private JPanel oneProductPanel(Product product) {
         JPanel oneProductPanel = new JPanel(new BorderLayout());
-//        oneProductPanel.setToolTipText(product.getDescription());
         oneProductPanel.setBorder(new LineBorder(Color.WHITE));
         oneProductPanel.setPreferredSize(new Dimension(100, 40));
         oneProductPanel.setBackground(new Color(255, 253, 253));
@@ -599,10 +604,10 @@ public class GroupPanel extends JPanel {
 
     private void addProduct() throws NumberFormatException {
         try {
-            if (!unicProdNames.contains(nameArea.getText())) {
-                unicProdNames.add(nameArea.getText());
+            if (!unicProdNames.contains(nameArea.getText().toLowerCase())) {
+                unicProdNames.add(nameArea.getText().toLowerCase());
                 String name = nameArea.getText();
-                int price = Integer.valueOf(priceArea.getText());
+                float price = Float.valueOf(priceArea.getText());
                 int number = Integer.valueOf(numberArea.getText());
                 String brand = brandArea.getText();
                 String description = descriptionArea.getText();
@@ -614,8 +619,43 @@ public class GroupPanel extends JPanel {
                 showUnicNameError();
             }
         } catch (NumberFormatException exception) {
+            showIllegalFormat();
 
         }
+    }
+
+    private void showIllegalFormat(){
+        JFrame errorMessage = new JFrame();
+        errorMessage.setSize(500, 150);
+        errorMessage.setLocationRelativeTo(null);
+
+        JPanel northPanel1 = new JPanel();
+        JPanel southPanel1 = new JPanel(new GridLayout(1, 1));
+
+        errorMessage.add(northPanel1, BorderLayout.CENTER);
+        errorMessage.add(southPanel1, BorderLayout.SOUTH);
+        northPanel1.setBackground(new Color(250, 250, 250));
+
+        southPanel1.setBackground(new Color(236, 234, 232));
+        JLabel label = new JLabel("Дані введено некоректно.");
+        label.setFont(new Font(Font.SERIF, Font.PLAIN, 15));
+        JButton yes = new JButton("Ок");
+        yes.setBackground(new Color(128, 118, 146));
+        yes.setFont(new Font(Font.SERIF, Font.PLAIN, 18));
+        yes.setForeground(new Color(250, 250, 250));
+        northPanel1.add(label, BorderLayout.CENTER);
+        southPanel1.add(yes, BorderLayout.WEST);
+        errorMessage.setVisible(true);
+
+        yes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                errorMessage.removeAll();
+                errorMessage.setVisible(false);
+                numberArea.setText("");
+
+            }
+        });
     }
 
     private void showUnicNameError() {
@@ -653,8 +693,6 @@ public class GroupPanel extends JPanel {
 
 
     }
-
-
 
 
 }

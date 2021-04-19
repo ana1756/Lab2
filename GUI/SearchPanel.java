@@ -78,9 +78,7 @@ public class SearchPanel extends JPanel {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: 08.04.2021 Вікно результатів пошуку
-
-                programWindow.openSearchWindow(searchText.getText());
+                                programWindow.openSearchWindow(searchText.getText());
             }
         });
 

@@ -1,18 +1,19 @@
 package GUI;
 
-import GUI.ProgramWindow;
+
 import Program.*;
-
-import java.util.HashSet;
-
 
 public class Tester {
 
 
     public static void main(String[] args) {
+
+
         Store store = new Store();
+
+
         ProgramWindow w = new ProgramWindow(store);
-   
+
     }
 
     private void oldMain() {

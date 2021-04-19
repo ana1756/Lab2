@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class StorePanel extends JPanel {
 
@@ -199,7 +200,7 @@ public class StorePanel extends JPanel {
         addCat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: 08.04.2021 Open Statistics Window
+
                 programWindow.openStatisticsWindow();
 
             }
@@ -217,7 +218,6 @@ public class StorePanel extends JPanel {
         addCat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: 07.04.2021 Створити файл
                 programWindow.createStoreFile();
             }
         });
@@ -353,15 +353,15 @@ public class StorePanel extends JPanel {
         saveCategory.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!unicCatNames.contains(newCategory.getText()) && !newCategory.getText().equals("")
+                if (!unicCatNames.contains(newCategory.getText().toLowerCase()) && !newCategory.getText().equals("")
                         && !newDetails.getText().equals("")) {
-                    unicCatNames.add(newCategory.getText());
+                    unicCatNames.add(newCategory.getText().toLowerCase());
                     Group newGroup = new Group(newCategory.getText(), newDetails.getText());
                     newGroup.setDescription(newDetails.getText());
                     programWindow.getStore().addGroup(newGroup);
                     programWindow.remove(StorePanel.this);
                     programWindow.openStoreWindow();
-                } else if ((newCategory.getText().equals("") || newDetails.getText().equals("")) &&!unicCatNames.contains(newCategory.getText())) {
+                } else if ((newCategory.getText().equals("") || newDetails.getText().equals("")) &&!unicCatNames.contains(newCategory.getText().toLowerCase())) {
                     showEmptyAreaError();
                 } else {
                     showUnicNameError();
