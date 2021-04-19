@@ -6,7 +6,7 @@ public class Product {
     private String description;
     private String brand;
     private boolean deleted = false;
-    private int price;
+    private float price;
     private int number;
     private static int numberAll = 0;
 
@@ -19,7 +19,7 @@ public class Product {
      * @param brand       виробник товару
      * @param description опис товару
      */
-    public Product(String name, int price, int number, String brand, String description) {
+    public Product(String name, float price, int number, String brand, String description) {
         this.name = name;
         this.price = price;
         this.number = number;
@@ -83,7 +83,7 @@ public class Product {
         return brand;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
